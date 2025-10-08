@@ -15,6 +15,7 @@
 
         <groovy.version>4.0.22</groovy.version>
         <spock.version>2.3-groovy-4.0</spock.version>
+        <lombok.version>1.18.38</lombok.version>
 
 
         <gmavenplus.plugin>3.0.2</gmavenplus.plugin>
@@ -22,6 +23,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
