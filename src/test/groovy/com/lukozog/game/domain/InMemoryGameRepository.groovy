@@ -1,25 +1,36 @@
 package com.lukozog.game.domain
 
-import java.time.LocalDateTime
+
 import java.util.concurrent.ConcurrentHashMap
 
-import static InMemoryTeamRepository.FRANCE
-import static InMemoryTeamRepository.GERMANY
-
 class InMemoryGameRepository implements GameRepository {
-
-    static final Game GERMANY_VS_FRANCE = new Game(
-            TestIdGenerator.generateId(),
-            new Team(GERMANY.getId(), GERMANY.getName()),
-            new Team(FRANCE.getId(), FRANCE.getName()),
-            new Score(),
-            LocalDateTime.of(2025, 8, 10, 20, 25, 0)
-    );
 
     private final Map<Long, Game> gameIdToGame;
 
     InMemoryGameRepository() {
         this.gameIdToGame = new ConcurrentHashMap<>();
-        gameIdToGame.put(GERMANY_VS_FRANCE.getId(), GERMANY_VS_FRANCE);
+    }
+
+    @Override
+    boolean isAnyTeamInvolvedInOtherGame(List<Long> teamIds) {
+        return gameIdToGame.values().stream()
+                .anyMatch(game ->
+                        teamIds.contains(game.getHomeTeam().getId()) || teamIds.contains(game.getAwayTeam().getId())
+                );
+    }
+
+    @Override
+    void save(Game newGame) {
+        gameIdToGame.put(newGame.getId(), newGame);
+    }
+
+    @Override
+    Optional<Game> findById(Long gameId) {
+        return Optional.ofNullable(gameIdToGame.get(gameId));
+    }
+
+    @Override
+    Collection<Game> getGamesSummary() {
+        return gameIdToGame.values();
     }
 }
