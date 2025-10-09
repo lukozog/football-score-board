@@ -1,7 +1,7 @@
 Assumptions
 
 - I assumed that once the game is finished, it won't be visible on the scoreboard, but I am not certain about it.
-  Scoreboard may also contain historical games
+  Score Board may also contain historical games
 
 Improvements
 
